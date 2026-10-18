@@ -19,87 +19,84 @@ export default function ContactSection({ email, githubUrl, linkedinUrl }: Contac
   };
 
   return (
-    <section id="contact" className="py-24 border-t border-zinc-800/80 relative">
-      {/* Background warm glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/[0.04] rounded-full blur-3xl pointer-events-none -z-10" />
-
+    <section id="contact" className="py-20 md:py-28 border-b border-[var(--border-color)]">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="rounded-3xl bg-gradient-to-b from-[#15171d] to-[#101216] border border-zinc-800 p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-          {/* Subtle top amber highlight */}
-          <div className="absolute top-0 left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
-
-          <div className="flex items-center gap-2 font-mono text-xs text-amber-400 mb-4">
+        <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-8 sm:p-12 shadow-xs">
+          <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-blue)] mb-3">
             <MessageSquare size={13} />
-            <span>LET&apos;S COLLABORATE</span>
+            <span>LET&apos;S CONNECT</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-100 mb-6 leading-tight">
-            Have a problem worth figuring out?
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)] mb-4">
+            Open to AI Engineering Opportunities
           </h2>
 
-          <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-8 max-w-xl">
-            I’m actively looking for <span className="text-amber-300 font-medium">AI Engineering internships</span>,
-            junior positions, and research opportunities. Whether you want to talk RAG benchmarks, agent architectures, or have an open role, my inbox is open.
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed mb-8 max-w-xl">
+            I am actively seeking <strong className="text-[var(--text-primary)]">AI Engineering internships</strong>, junior roles, and technical project collaborations. If you are building LLM applications, evaluating ML pipelines, or have an opportunity to discuss, my inbox is open.
           </p>
 
-          {/* Quick Contact Buttons */}
+          {/* Contact Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             <button
               onClick={handleCopyEmail}
-              className="flex items-center justify-between p-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-800 hover:border-amber-400/40 text-xs font-mono text-zinc-200 transition-all group"
+              className="flex items-center justify-between p-3.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-muted)]/50 hover:bg-[var(--bg-muted)] text-xs font-mono text-[var(--text-primary)] transition-colors group cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
-                <Mail size={15} className="text-amber-400" />
+                <Mail size={15} className="text-[var(--accent-blue)]" />
                 <span>{copied ? "Copied!" : "Copy Email"}</span>
               </div>
-              {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} className="text-zinc-500 group-hover:text-zinc-300" />}
+              {copied ? (
+                <Check size={14} className="text-emerald-600 dark:text-emerald-400" />
+              ) : (
+                <Copy size={13} className="text-[var(--text-muted)] group-hover:text-[var(--text-primary)]" />
+              )}
             </button>
 
             <a
               href={`mailto:${email}`}
-              className="flex items-center justify-between p-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-800 hover:border-amber-400/40 text-xs font-mono text-zinc-200 transition-all group"
+              className="flex items-center justify-between p-3.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-muted)]/50 hover:bg-[var(--bg-muted)] text-xs font-mono text-[var(--text-primary)] transition-colors group"
             >
               <div className="flex items-center gap-2.5">
-                <Mail size={15} className="text-zinc-400" />
-                <span>Direct Mail</span>
+                <Mail size={15} className="text-[var(--text-muted)]" />
+                <span>Send Mail</span>
               </div>
-              <ArrowUpRight size={14} className="text-zinc-500 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={13} className="text-[var(--text-muted)] group-hover:text-[var(--accent-blue)] transition-colors" />
             </a>
 
             <a
               href={githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-800 hover:border-amber-400/40 text-xs font-mono text-zinc-200 transition-all group"
+              className="flex items-center justify-between p-3.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-muted)]/50 hover:bg-[var(--bg-muted)] text-xs font-mono text-[var(--text-primary)] transition-colors group"
             >
               <div className="flex items-center gap-2.5">
-                <Github size={15} className="text-zinc-400" />
+                <Github size={15} className="text-[var(--text-muted)]" />
                 <span>GitHub</span>
               </div>
-              <ArrowUpRight size={14} className="text-zinc-500 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={13} className="text-[var(--text-muted)] group-hover:text-[var(--accent-blue)] transition-colors" />
             </a>
 
             <a
               href={linkedinUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-800 hover:border-amber-400/40 text-xs font-mono text-zinc-200 transition-all group"
+              className="flex items-center justify-between p-3.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-muted)]/50 hover:bg-[var(--bg-muted)] text-xs font-mono text-[var(--text-primary)] transition-colors group"
             >
               <div className="flex items-center gap-2.5">
-                <Linkedin size={15} className="text-zinc-400" />
+                <Linkedin size={15} className="text-[var(--text-muted)]" />
                 <span>LinkedIn</span>
               </div>
-              <ArrowUpRight size={14} className="text-zinc-500 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={13} className="text-[var(--text-muted)] group-hover:text-[var(--accent-blue)] transition-colors" />
             </a>
           </div>
 
           {/* Location & Status Bar */}
-          <div className="pt-6 border-t border-zinc-850 flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono text-zinc-400 gap-2">
+          <div className="pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono text-[var(--text-muted)] gap-2">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Available for internships &amp; junior roles</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400" />
+              <span>Available for internships &amp; junior positions</span>
             </div>
-            <span>Based in Indonesia · Open to Remote worldwide</span>
+            <span>Based in Indonesia · Open to Remote</span>
           </div>
         </div>
       </div>

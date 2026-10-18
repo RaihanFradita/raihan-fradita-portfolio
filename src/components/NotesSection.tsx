@@ -1,114 +1,96 @@
-"use client";
+import { FileText } from "lucide-react";
 
-import { BookOpen, Zap, Shield, Split, Clock } from "lucide-react";
-
-interface Note {
-  number: string;
+interface NoteItem {
+  id: string;
+  topic: string;
+  date: string;
   title: string;
-  icon: typeof Zap;
-  category: string;
-  excerpt: string;
-  takeaway: string;
+  summary: string;
+  keyTakeaway: string;
 }
 
-const engineeringNotes: Note[] = [
+const technicalNotes: NoteItem[] = [
   {
-    number: "01",
-    title: "Context is King, Prompting is Queen",
-    icon: Split,
-    category: "RAG & RETRIEVAL",
-    excerpt:
-      "When an LLM produces a hallucinated answer, 90% of developers tweak the system prompt. In reality, the issue almost always stems from poor semantic boundary chunking, missing metadata, or lack of cross-encoder reranking.",
-    takeaway: "Clean chunking and hybrid indexing solve what 10 pages of prompt engineering cannot."
+    id: "local-rag",
+    topic: "LLM ENGINEERING",
+    date: "OCTOBER 2026",
+    title: "Building Local RAG with Ollama: Managing Context and Memory",
+    summary:
+      "When running local language models (such as Llama 3.2 3B and Qwen 2.5 7B) on consumer hardware, naive RAG often fails due to memory exhaustion or slow Time-To-First-Token. Limiting retrieved context to 3–4 high-scoring chunks and using 4-bit quantization stabilizes latency without meaningful loss of answer accuracy.",
+    keyTakeaway: "Smaller, well-grounded context beats large, noisy context windows on resource-constrained hardware."
   },
   {
-    number: "02",
-    title: "Deterministic Evals Over 'Vibe Testing'",
-    icon: Shield,
-    category: "EVALUATION & RELIABILITY",
-    excerpt:
-      "Testing an AI pipeline by manually prompting it five times creates false security. Production reliability requires a version-controlled test suite tracking Faithfulness, Context Recall, and Groundedness on every git push.",
-    takeaway: "If you cannot measure regression automatically, you don't have a system—you have a demo."
+    id: "eval-metrics",
+    topic: "MACHINE LEARNING",
+    date: "SEPTEMBER 2026",
+    title: "Evaluating Classification Models Beyond Raw Accuracy",
+    summary:
+      "In predictive academic retention models where delayed graduation is the minority class, a model predicting 100% on-time graduation can achieve ~80% accuracy while being completely useless. Prioritizing Recall and examining the precision-recall curve ensures vulnerable students are not overlooked.",
+    keyTakeaway: "In early warning systems, false negatives (failing to identify an at-risk student) carry far higher cost than false positives."
   },
   {
-    number: "03",
-    title: "Compound AI Systems Over Monolithic Models",
-    icon: Zap,
-    category: "SYSTEMS ARCHITECTURE",
-    excerpt:
-      "Instead of delegating everything to a massive frontier model, compound systems combine fast local SLMs (Small Language Models) for classification, vector DBs for retrieval, and strict Pydantic schemas for verification.",
-    takeaway: "Specialized components with clear boundaries are cheaper, faster, and far easier to debug."
-  },
-  {
-    number: "04",
-    title: "Latency and TTFT as First-Class Metrics",
-    icon: Clock,
-    category: "PERFORMANCE ENGINEERING",
-    excerpt:
-      "A brilliant model that takes 8 seconds before returning a token feels broken to users. Prioritizing Time-to-First-Token (TTFT), token streaming, and semantic response caching transforms user perception.",
-    takeaway: "Fast partial feedback keeps users engaged while heavy inference completes."
+    id: "structured-outputs",
+    topic: "AI INTEGRATION",
+    date: "SEPTEMBER 2026",
+    title: "Enforcing Deterministic Contracts with Pydantic",
+    summary:
+      "Natural language generation without schema constraints leads to unpredictable JSON parsing failures in backend microservices. Using Pydantic models with instructor/function-calling patterns transforms probabilistic text generation into strictly typed API data structures.",
+    keyTakeaway: "Downstream applications require reliable schemas; validation layers belong at the API boundary."
   }
 ];
 
 export default function NotesSection() {
   return (
-    <section id="notes" className="py-24 border-t border-zinc-800/80">
+    <section id="notes" className="py-20 md:py-28 border-b border-[var(--border-color)]">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-amber-400 mb-2.5">
-              <BookOpen size={13} />
-              <span>FIELD NOTES & MENTAL MODELS</span>
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent-blue)] mb-2">
+              <FileText size={13} />
+              <span>TECHNICAL OBSERVATIONS &amp; WRITE-UPS</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-100">
-              Engineering Principles
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
+              Learning &amp; Technical Notes
             </h2>
           </div>
-          <p className="text-sm text-zinc-400 max-w-md leading-relaxed">
-            The practical heuristics I follow when building AI systems. Pragmatic, test-driven, and focused on real-world utility over hype.
+          <p className="text-sm text-[var(--text-secondary)] max-w-md leading-relaxed">
+            Concise summaries of technical problems encountered, evaluated trade-offs, and lessons learned while building.
           </p>
         </div>
 
         {/* Notes Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {engineeringNotes.map((note) => {
-            const Icon = note.icon;
-            return (
-              <article
-                key={note.number}
-                className="rounded-2xl bg-[#121419] border border-zinc-800 p-6 sm:p-7 hover:border-zinc-700/80 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-4 border-b border-zinc-850 mb-5">
-                    <span className="font-mono text-xs font-bold text-amber-400">
-                      {note.number} / {note.category}
-                    </span>
-                    <div className="p-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
-                      <Icon size={14} />
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-zinc-100 mb-3 tracking-tight">
-                    {note.title}
-                  </h3>
-
-                  <p className="text-xs text-zinc-300 leading-relaxed mb-6">
-                    {note.excerpt}
-                  </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {technicalNotes.map((note) => (
+            <article
+              key={note.id}
+              className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6 shadow-xs flex flex-col justify-between hover:border-[var(--text-muted)] transition-colors"
+            >
+              <div>
+                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] pb-3 border-b border-[var(--border-subtle)] mb-4">
+                  <span className="text-[var(--accent-blue)] font-semibold">{note.topic}</span>
+                  <span>{note.date}</span>
                 </div>
 
-                <div className="pt-4 border-t border-zinc-850/80 bg-zinc-950/40 -mx-6 sm:-mx-7 -mb-6 sm:-mb-7 p-4 sm:p-5 rounded-b-2xl">
-                  <div className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
-                    CORE HEURISTIC
-                  </div>
-                  <div className="text-xs font-medium text-amber-300/90 leading-snug">
-                    &ldquo;{note.takeaway}&rdquo;
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+                <h3 className="text-base font-bold text-[var(--text-primary)] mb-3 leading-snug">
+                  {note.title}
+                </h3>
+
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-5">
+                  {note.summary}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-[var(--border-subtle)] bg-[var(--bg-muted)]/50 -mx-5 sm:-mx-6 -mb-5 sm:-mb-6 p-4 rounded-b-xl">
+                <span className="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-wider block mb-1">
+                  CORE TAKEAWAY
+                </span>
+                <p className="text-xs font-medium text-[var(--text-primary)] italic">
+                  &ldquo;{note.keyTakeaway}&rdquo;
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

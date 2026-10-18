@@ -1,57 +1,76 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://raihan-fradita-portfolio.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Raihan Fradita — AI Engineer & Systems",
+    default: "Raihan Fradita — Aspiring AI Engineer | LLM Applications · RAG · AI Agents",
     template: "%s | Raihan Fradita"
   },
   description:
-    "Raihan Fradita builds production AI systems with hybrid RAG pipelines, deterministic agent workflows, continuous evals, Python, and modern web architectures.",
+    "Personal engineering portfolio of Raihan Fradita, an Informatics Engineering student focused on building practical AI applications, exploring machine learning, LLM-powered systems, RAG, and AI agents.",
   applicationName: "Raihan Fradita Portfolio",
   keywords: [
     "Raihan Fradita",
-    "AI Engineer",
+    "Aspiring AI Engineer",
+    "Informatics Engineering",
+    "LLM Applications",
     "RAG",
-    "Vector Search",
-    "pgvector",
-    "LLM Evals",
     "AI Agents",
+    "Machine Learning",
+    "scikit-learn",
     "Python",
     "FastAPI",
     "Next.js"
   ],
+  authors: [{ name: "Raihan Fradita", url: "https://github.com/RaihanFradita" }],
   openGraph: {
     type: "website",
-    title: "Raihan Fradita — AI Engineer & Systems",
+    title: "Raihan Fradita — Aspiring AI Engineer",
     description:
-      "Hybrid RAG architectures, compound AI agent workflows, and deterministic evaluation loops.",
-    siteName: "Raihan Fradita"
+      "Informatics Engineering student building practical AI applications, exploring machine learning, LLM-powered systems, RAG, and AI agents.",
+    siteName: "Raihan Fradita Portfolio",
+    locale: "en_US"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Raihan Fradita — AI Engineer & Systems",
-    description: "Hybrid RAG, compound AI workflows, and deterministic evals."
+    title: "Raihan Fradita — Aspiring AI Engineer",
+    description: "Building AI Systems That Solve Real Problems. Projects, architecture, and code."
   },
   robots: { index: true, follow: true }
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0c0f",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fbfbf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0e1014" }
+  ],
   width: "device-width",
   initialScale: 1
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-[#0b0c0f] text-zinc-100 antialiased selection:bg-amber-400/20 selection:text-amber-200">
-        {children}
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `
+          }}
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

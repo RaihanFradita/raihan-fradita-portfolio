@@ -1,184 +1,146 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowDownRight, Github, Linkedin, Activity, Database, Award } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 
 interface HeroProps {
   githubUrl: string;
   linkedinUrl: string;
+  email: string;
 }
 
-export default function Hero({ githubUrl, linkedinUrl }: HeroProps) {
-  return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-      {/* Ambient warm glow background - subtle late-night desk lamp feeling */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-amber-500/[0.07] via-amber-700/[0.02] to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-20 right-10 w-72 h-72 bg-emerald-500/[0.03] rounded-full blur-3xl pointer-events-none -z-10" />
+const coreTechnologies = [
+  "Python",
+  "scikit-learn",
+  "Ollama",
+  "LangChain",
+  "FastAPI",
+  "PostgreSQL",
+  "Next.js"
+];
 
+export default function Hero({ githubUrl, linkedinUrl, email }: HeroProps) {
+  return (
+    <section className="pt-28 pb-16 md:pt-36 md:pb-24 border-b border-[var(--border-color)]">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Main Hero Copy */}
-          <div className="lg:col-span-7 flex flex-col items-start">
-            {/* Photo Avatar & Status Badge */}
-            <div className="flex items-center gap-3.5 mb-6">
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border border-amber-400/40 shadow-[0_0_18px_rgba(251,191,36,0.15)] flex-shrink-0 bg-zinc-900">
-                <Image
-                  src="/raihan.jpg"
-                  alt="Raihan Fradita"
-                  fill
-                  className="object-cover object-top"
-                  priority
-                />
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs text-zinc-300 shadow-inner">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span className="font-mono text-[11px] text-zinc-300">
-                  OPEN TO AI ROLES &amp; RESEARCH
-                </span>
-                <span className="text-zinc-600">|</span>
-                <span className="text-zinc-400 text-[11px]">ID &amp; REMOTE</span>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          {/* Main Hero Copy (7 cols) */}
+          <div className="lg:col-span-8 flex flex-col items-start">
+            {/* Professional Label Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border-color)] bg-[var(--bg-surface)] text-xs text-[var(--text-secondary)] mb-6">
+              <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+              <span className="font-mono font-medium text-[11px] tracking-wide text-[var(--text-primary)]">
+                Aspiring AI Engineer
+              </span>
+              <span className="text-[var(--text-muted)]">·</span>
+              <span className="text-[var(--text-muted)] text-[11px]">Informatics Engineering Student</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-100 leading-[1.08] mb-6">
-              Engineering AI systems that{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-200 to-amber-400 font-serif italic font-normal">
-                survive contact
-              </span>{" "}
-              with reality.
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.15] mb-6">
+              Building AI Systems That{" "}
+              <span className="text-[var(--accent-blue)]">Solve Real Problems.</span>
             </h1>
 
-            {/* Bio Description */}
-            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed max-w-xl mb-8">
-              I’m <span className="text-zinc-100 font-medium">Raihan Fradita</span>, an Information Technology
-              undergraduate specializing in <span className="text-amber-300/90 font-medium">AI Engineering</span>.
-              I build hybrid RAG pipelines, structured agent workflows, and deterministic evals—moving beyond prompt guesswork into observable production software.
+            {/* Supporting Description */}
+            <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mb-8">
+              I’m an Informatics Engineering student focused on building practical AI applications, exploring machine learning, LLM-powered systems, retrieval-augmented generation (RAG), and AI agents. I learn by building, testing, and documenting real projects.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-3 mb-10">
               <a
-                href="#architecture"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 text-xs font-semibold tracking-wide transition-all shadow-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] active:scale-95"
+                href="#projects"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[var(--accent-blue)] hover:bg-[var(--accent-blue-hover)] text-white text-xs font-semibold tracking-wide transition-colors shadow-xs active:translate-y-px"
               >
-                <span>Interactive Pipeline</span>
-                <ArrowDownRight size={15} />
+                <span>Explore Projects</span>
+                <ArrowDown size={14} />
               </a>
 
               <a
-                href="#projects"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/[0.08] text-xs font-medium transition-all"
+                href={githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--bg-muted)] text-[var(--text-primary)] text-xs font-medium transition-colors"
               >
-                <span>Selected Projects</span>
+                <Github size={14} />
+                <span>View GitHub</span>
+                <ArrowUpRight size={13} className="text-[var(--text-muted)]" />
               </a>
 
-              <Link
-                href="/certificates"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-amber-400/10 hover:bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-mono transition-all"
+              <a
+                href={`mailto:${email}`}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-xs font-medium transition-colors"
+                title={`Send email to ${email}`}
               >
-                <Award size={13} className="text-amber-400" />
-                <span>3 Certifications</span>
-              </Link>
-
-              <div className="flex items-center gap-1.5 sm:ml-2">
-                <a
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub Profile"
-                  className="p-2.5 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 border border-white/[0.08] transition-all"
-                >
-                  <Github size={16} />
-                </a>
-                <a
-                  href={linkedinUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn Profile"
-                  className="p-2.5 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 border border-white/[0.08] transition-all"
-                >
-                  <Linkedin size={16} />
-                </a>
-              </div>
+                <Mail size={14} />
+                <span>Contact Me</span>
+              </a>
             </div>
 
-            {/* Core Philosophy Footnote */}
-            <div className="flex items-center gap-3 text-xs font-mono text-zinc-400 pt-4 border-t border-zinc-800/80 w-full max-w-lg">
-              <span className="text-amber-400/90">PRINCIPIA:</span>
-              <span className="text-zinc-300">Context &gt; Clever Prompts</span>
-              <span className="text-zinc-600">·</span>
-              <span className="text-zinc-300">Evals &gt; Vibes</span>
+            {/* Restrained Technology Summary */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-xs font-mono text-[var(--text-muted)] pt-6 border-t border-[var(--border-color)] w-full">
+              <span className="text-[var(--text-secondary)] font-semibold uppercase text-[10px] tracking-wider">
+                CORE FOCUS:
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {coreTechnologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2 py-0.5 rounded bg-[var(--bg-muted)] border border-[var(--border-subtle)] text-[var(--text-secondary)] text-[11px]"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Right Side: Engineering Telemetry / Cozy System Snapshot */}
-          <div className="lg:col-span-5">
-            <div className="relative rounded-2xl bg-[#121419]/90 border border-zinc-800/90 p-5 shadow-2xl backdrop-blur-md">
-              {/* Profile Card Header */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/80 mb-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                  <span className="font-mono text-xs text-zinc-300 tracking-wide font-medium">
-                    ai_engine_runtime.py
+          {/* Clean Profile Photo Card (4 cols) */}
+          <div className="lg:col-span-4 flex justify-center lg:justify-end">
+            <div className="w-full max-w-xs rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 shadow-sm">
+              <div className="relative aspect-[4/5] w-full rounded-lg overflow-hidden bg-[var(--bg-muted)] border border-[var(--border-subtle)] mb-4">
+                <Image
+                  src="/raihan.jpg"
+                  alt="Raihan Fradita - Aspiring AI Engineer"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 320px"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-sm font-bold text-[var(--text-primary)]">Raihan Fradita</h2>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                    Active Learner
                   </span>
                 </div>
-                <span className="font-mono text-[10px] text-zinc-400 bg-zinc-800/60 px-2 py-0.5 rounded border border-zinc-700/50">
-                  HEALTH: NOMINAL
-                </span>
-              </div>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Undergraduate student in Informatics Engineering pursuing applied AI and systems integration.
+                </p>
 
-              {/* Live Metric Cards Grid */}
-              <div className="grid grid-cols-2 gap-2.5 mb-4">
-                <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-lg p-3">
-                  <div className="flex items-center justify-between text-zinc-400 text-[11px] font-mono mb-1">
-                    <span>RAG HIT RATE</span>
-                    <Database size={12} className="text-amber-400/80" />
+                <div className="pt-2 flex items-center justify-between border-t border-[var(--border-subtle)] text-xs text-[var(--text-muted)] font-mono">
+                  <span>Based in Indonesia</span>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="GitHub Profile"
+                      className="hover:text-[var(--text-primary)] transition-colors"
+                    >
+                      <Github size={14} />
+                    </a>
+                    <a
+                      href={linkedinUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="LinkedIn Profile"
+                      className="hover:text-[var(--text-primary)] transition-colors"
+                    >
+                      <Linkedin size={14} />
+                    </a>
                   </div>
-                  <div className="text-xl font-bold font-mono text-zinc-100">94.6%</div>
-                  <div className="text-[10px] text-emerald-400 font-mono mt-0.5">Top-3 Recall @ dense+BM25</div>
-                </div>
-
-                <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-lg p-3">
-                  <div className="flex items-center justify-between text-zinc-400 text-[11px] font-mono mb-1">
-                    <span>P95 LATENCY</span>
-                    <Activity size={12} className="text-emerald-400/80" />
-                  </div>
-                  <div className="text-xl font-bold font-mono text-zinc-100">340ms</div>
-                  <div className="text-[10px] text-zinc-400 font-mono mt-0.5">TTFT via streaming chunk</div>
-                </div>
-              </div>
-
-              {/* Real Engineering Code Snapshot */}
-              <div className="bg-zinc-950/90 rounded-lg p-3.5 border border-zinc-800/70 font-mono text-[11px] text-zinc-300 leading-relaxed overflow-x-auto">
-                <div className="text-zinc-500">{"// Grounded generation with deterministic guardrail"}</div>
-                <div className="text-amber-300/90">
-                  <span className="text-purple-400">async def</span>{" "}
-                  <span className="text-blue-300">retrieve_and_verify</span>(query: <span className="text-emerald-400">str</span>):
-                </div>
-                <div className="pl-4 text-zinc-400">
-                  docs = <span className="text-zinc-200">await hybrid_retriever.get(query, k=5)</span>
-                </div>
-                <div className="pl-4 text-zinc-400">
-                  ranked = <span className="text-zinc-200">rerank_cross_encoder(docs, threshold=0.78)</span>
-                </div>
-                <div className="pl-4 text-zinc-400">
-                  eval_score = <span className="text-amber-300">eval_faithfulness</span>(ranked, context)
-                </div>
-                <div className="pl-4 text-emerald-400">
-                  return <span className="text-zinc-200">synthesize_structured_output(ranked)</span>
-                </div>
-              </div>
-
-              {/* Stack Badges inside Card */}
-              <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-[11px] font-mono">
-                <span className="text-zinc-400">LOCAL_MODELS</span>
-                <div className="flex gap-1.5">
-                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300">Qwen 2.5</span>
-                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300">Llama 3.2</span>
-                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300">vLLM</span>
                 </div>
               </div>
             </div>

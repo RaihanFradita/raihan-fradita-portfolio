@@ -2,131 +2,132 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Terminal, Check, Copy, Award } from "lucide-react";
+import { Github, Menu, X, ArrowUpRight } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
-interface HeaderProps {
-  onToggleTerminal?: () => void;
-}
-
-export default function Header({ onToggleTerminal }: HeaderProps) {
-  const [copied, setCopied] = useState(false);
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const email = process.env.NEXT_PUBLIC_EMAIL || "raihanfradita.dev@gmail.com";
+  const github = process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/RaihanFradita";
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const navLinks = [
+    { label: "Home", href: "/#top" },
+    { label: "Projects", href: "/#projects" },
+    { label: "Deep-Dive", href: "/#deep-dive" },
+    { label: "Skills", href: "/#skills" },
+    { label: "About", href: "/#about" },
+    { label: "Certificates", href: "/certificates" },
+    { label: "Contact", href: "/#contact" }
+  ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b ${
         scrolled
-          ? "bg-[#0d0f12]/85 backdrop-blur-md border-b border-white/[0.06] py-3.5"
-          : "bg-transparent py-5"
+          ? "bg-[var(--bg-surface)]/90 backdrop-blur-md border-[var(--border-color)] shadow-xs py-3"
+          : "bg-[var(--bg-primary)]/80 backdrop-blur-xs border-transparent py-4"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        {/* Brand / Identifier */}
+        {/* Brand / Logo */}
         <Link
           href="/#top"
-          className="group flex items-center gap-3 text-zinc-200 hover:text-white transition-colors"
+          className="flex items-center gap-2.5 text-[var(--text-primary)] hover:opacity-85 transition-opacity"
         >
-          <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700/60 flex items-center justify-center font-mono text-xs font-semibold text-amber-400 group-hover:border-amber-400/50 group-hover:shadow-[0_0_12px_rgba(251,191,36,0.15)] transition-all">
-            rf
+          <div className="w-7 h-7 rounded-md bg-[var(--text-primary)] text-[var(--bg-primary)] flex items-center justify-center font-mono text-xs font-bold">
+            RF
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-sm tracking-tight text-zinc-100 flex items-center gap-1.5">
+            <span className="font-semibold text-sm tracking-tight text-[var(--text-primary)] leading-none">
               Raihan Fradita
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </span>
-            <span className="font-mono text-[10px] text-zinc-400 tracking-wider">
-              AI_ENGINEER // SYSTEMS
+            <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-wider mt-0.5">
+              ASPIRING AI ENGINEER
             </span>
           </div>
         </Link>
 
-        {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-zinc-900/70 border border-white/[0.08] px-3 py-1.5 rounded-full text-xs font-medium text-zinc-300 shadow-sm backdrop-blur-sm">
-          <Link
-            href="/#architecture"
-            className="px-3 py-1 rounded-full hover:text-amber-300 hover:bg-zinc-800/80 transition-all"
-          >
-            Architecture
-          </Link>
-          <Link
-            href="/#projects"
-            className="px-3 py-1 rounded-full hover:text-amber-300 hover:bg-zinc-800/80 transition-all"
-          >
-            Projects
-          </Link>
-          <Link
-            href="/#stack"
-            className="px-3 py-1 rounded-full hover:text-amber-300 hover:bg-zinc-800/80 transition-all"
-          >
-            Stack &amp; Evals
-          </Link>
-          <Link
-            href="/certificates"
-            className="px-3 py-1 rounded-full text-amber-300/90 hover:text-amber-300 hover:bg-zinc-800/80 transition-all flex items-center gap-1"
-          >
-            <Award size={12} className="text-amber-400" />
-            <span>Certificates</span>
-          </Link>
-          <Link
-            href="/#notes"
-            className="px-3 py-1 rounded-full hover:text-amber-300 hover:bg-zinc-800/80 transition-all"
-          >
-            Notes
-          </Link>
-          <Link
-            href="/#about"
-            className="px-3 py-1 rounded-full hover:text-amber-300 hover:bg-zinc-800/80 transition-all"
-          >
-            About
-          </Link>
+        {/* Desktop Navigation */}
+        <nav
+          aria-label="Primary Navigation"
+          className="hidden md:flex items-center gap-6 text-xs font-medium text-[var(--text-secondary)]"
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="hover:text-[var(--accent-blue)] transition-colors py-1"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* Quick Actions */}
-        <div className="flex items-center gap-2">
-          {onToggleTerminal && (
-            <button
-              onClick={onToggleTerminal}
-              title="Open Interactive Terminal"
-              className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-zinc-400 hover:text-amber-400 bg-zinc-900/80 hover:bg-zinc-800/90 border border-white/[0.08] px-3 py-1.5 rounded-lg transition-all"
-            >
-              <Terminal size={13} className="text-amber-400/90" />
-              <span>terminal</span>
-            </button>
-          )}
-
-          <button
-            onClick={handleCopyEmail}
-            className="flex items-center gap-2 text-xs font-medium text-zinc-200 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 px-3.5 py-1.5 rounded-lg transition-all active:scale-95"
+        {/* Right Actions: GitHub + Theme Toggle + Mobile Menu Trigger */}
+        <div className="flex items-center gap-2.5">
+          <a
+            href={github}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub Profile"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs font-mono"
           >
-            {copied ? (
-              <>
-                <Check size={13} className="text-emerald-400" />
-                <span className="text-emerald-300 font-mono text-[11px]">Copied!</span>
-              </>
-            ) : (
-              <>
-                <Copy size={13} className="opacity-70" />
-                <span>Get in touch</span>
-              </>
-            )}
+            <Github size={13} />
+            <span>GitHub</span>
+          </a>
+
+          <ThemeToggle />
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle navigation menu"
+            className="md:hidden p-1.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-b border-[var(--border-color)] bg-[var(--bg-surface)] px-6 py-4 shadow-lg">
+          <nav className="flex flex-col gap-3 text-sm font-medium text-[var(--text-secondary)]">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1.5 hover:text-[var(--accent-blue)] transition-colors border-b border-[var(--border-subtle)] last:border-b-0"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-2 flex items-center gap-3">
+              <a
+                href={github}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent-blue)]"
+              >
+                <Github size={14} />
+                <span>github.com/RaihanFradita</span>
+                <ArrowUpRight size={12} />
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

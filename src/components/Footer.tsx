@@ -8,19 +8,19 @@ interface FooterProps {
 
 export default function Footer({ githubUrl, linkedinUrl, email }: FooterProps) {
   return (
-    <footer className="border-t border-zinc-800/80 py-12 bg-[#0c0d10] text-zinc-400 font-mono text-xs">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="py-12 bg-[var(--bg-primary)] border-t border-[var(--border-color)] text-[var(--text-muted)] font-mono text-xs">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[10px] font-bold text-amber-400">
-            rf
+          <div className="w-6 h-6 rounded bg-[var(--text-primary)] text-[var(--bg-primary)] flex items-center justify-center text-[10px] font-bold">
+            RF
           </div>
-          <span className="text-zinc-300 font-semibold">Raihan Fradita</span>
-          <span className="text-zinc-600">/</span>
-          <span className="text-zinc-500 text-[11px]">AI SYSTEMS &amp; RAG ENGINEERING</span>
+          <span className="text-[var(--text-primary)] font-semibold">Raihan Fradita</span>
+          <span className="text-[var(--border-color)]">/</span>
+          <span className="text-[var(--text-muted)] text-[11px]">ASPIRING AI ENGINEER</span>
         </div>
 
-        <div className="text-center md:text-left text-zinc-500 text-[11px]">
-          Crafted with care, coffee &amp; verifiable benchmarks. &copy; {new Date().getFullYear()}
+        <div className="text-center sm:text-left text-[var(--text-muted)] text-[11px]">
+          Built with Next.js, TypeScript &amp; Tailwind CSS. &copy; {new Date().getFullYear()}
         </div>
 
         <div className="flex items-center gap-4">
@@ -28,8 +28,9 @@ export default function Footer({ githubUrl, linkedinUrl, email }: FooterProps) {
             href={githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-amber-400 transition-colors"
-            title="GitHub"
+            className="hover:text-[var(--text-primary)] transition-colors"
+            title="GitHub Profile"
+            aria-label="GitHub Profile"
           >
             <Github size={15} />
           </a>
@@ -37,22 +38,25 @@ export default function Footer({ githubUrl, linkedinUrl, email }: FooterProps) {
             href={linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-amber-400 transition-colors"
-            title="LinkedIn"
+            className="hover:text-[var(--text-primary)] transition-colors"
+            title="LinkedIn Profile"
+            aria-label="LinkedIn Profile"
           >
             <Linkedin size={15} />
           </a>
           <a
             href={`mailto:${email}`}
-            className="hover:text-amber-400 transition-colors"
-            title="Email"
+            className="hover:text-[var(--text-primary)] transition-colors"
+            title="Send Email"
+            aria-label="Send Email"
           >
             <Mail size={15} />
           </a>
           <a
             href="#top"
-            className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 transition-all ml-2"
+            className="p-1 rounded border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--bg-muted)] text-[var(--text-primary)] transition-colors ml-2"
             title="Back to Top"
+            aria-label="Back to Top"
           >
             <ArrowUp size={13} />
           </a>
@@ -61,4 +65,3 @@ export default function Footer({ githubUrl, linkedinUrl, email }: FooterProps) {
     </footer>
   );
 }
-
