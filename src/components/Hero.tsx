@@ -8,13 +8,10 @@ interface HeroProps {
 }
 
 const coreTechnologies = [
-  "Python",
-  "scikit-learn",
-  "Ollama",
-  "LangChain",
-  "FastAPI",
-  "PostgreSQL",
-  "Next.js"
+  "AI Engineering",
+  "Large Language Models (LLMs)",
+  "AI Reliability",
+  "Full-Stack AI Applications"
 ];
 
 export default function Hero({ githubUrl, linkedinUrl, email }: HeroProps) {
@@ -36,13 +33,13 @@ export default function Hero({ githubUrl, linkedinUrl, email }: HeroProps) {
 
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.15] mb-6">
-              Building AI Systems That{" "}
-              <span className="text-[var(--accent-blue)]">Solve Real Problems.</span>
+              Building AI Systems with{" "}
+              <span className="text-[var(--accent-blue)]">Reliability and Real-World Applications.</span>
             </h1>
 
             {/* Supporting Description */}
             <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mb-8">
-              I’m an Informatics Engineering student focused on building practical AI applications, exploring machine learning, LLM-powered systems, retrieval-augmented generation (RAG), and AI agents. I learn by building, testing, and documenting real projects.
+              I&apos;m an Informatics student exploring AI engineering, large language models, and full-stack development. I build practical AI projects focused on reliable LLM outputs and AI-assisted financial intelligence.
             </p>
 
             {/* CTAs */}
@@ -79,7 +76,7 @@ export default function Hero({ githubUrl, linkedinUrl, email }: HeroProps) {
             {/* Restrained Technology Summary */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-xs font-mono text-[var(--text-muted)] pt-6 border-t border-[var(--border-color)] w-full">
               <span className="text-[var(--text-secondary)] font-semibold uppercase text-[10px] tracking-wider">
-                CORE FOCUS:
+                SPECIALIZATIONS:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {coreTechnologies.map((tech) => (

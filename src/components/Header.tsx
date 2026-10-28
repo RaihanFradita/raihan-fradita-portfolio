@@ -21,7 +21,7 @@ export default function Header() {
   const navLinks = [
     { label: "Home", href: "/#top" },
     { label: "Projects", href: "/#projects" },
-    { label: "Deep-Dive", href: "/#deep-dive" },
+    { label: "Waguri Flow", href: "/#deep-dive" },
     { label: "Skills", href: "/#skills" },
     { label: "About", href: "/#about" },
     { label: "Certificates", href: "/certificates" },

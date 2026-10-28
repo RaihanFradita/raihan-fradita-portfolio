@@ -6,7 +6,6 @@ import Projects from "@/components/Projects";
 import TechnicalDeepDive from "@/components/TechnicalDeepDive";
 import SkillsSection from "@/components/SkillsSection";
 import CertificatesPreview from "@/components/CertificatesPreview";
-import NotesSection from "@/components/NotesSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -35,9 +34,6 @@ export default function Home() {
 
       {/* Verified AI Certifications Preview */}
       <CertificatesPreview />
-
-      {/* Technical Notes & Heuristics */}
-      <NotesSection />
 
       {/* About Me & Learning Philosophy */}
       <AboutSection linkedinUrl={linkedin} />

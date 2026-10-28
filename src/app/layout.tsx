@@ -6,38 +6,41 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://raihan-fradita-port
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Raihan Fradita — Aspiring AI Engineer | LLM Applications · RAG · AI Agents",
+    default: "Raihan Fradita | AI Engineer Portfolio",
     template: "%s | Raihan Fradita"
   },
   description:
-    "Personal engineering portfolio of Raihan Fradita, an Informatics Engineering student focused on building practical AI applications, exploring machine learning, LLM-powered systems, RAG, and AI agents.",
+    "Explore Raihan Fradita's AI engineering projects, including Waguri Framework for AI reliability and AIRA Business for AI-powered financial intelligence.",
+  alternates: {
+    canonical: "/"
+  },
   applicationName: "Raihan Fradita Portfolio",
   keywords: [
     "Raihan Fradita",
-    "Aspiring AI Engineer",
-    "Informatics Engineering",
+    "AI Engineer Portfolio",
+    "AI Reliability",
     "LLM Applications",
-    "RAG",
-    "AI Agents",
-    "Machine Learning",
-    "scikit-learn",
+    "Financial Intelligence",
     "Python",
-    "FastAPI",
+    "Elysia.js",
     "Next.js"
   ],
   authors: [{ name: "Raihan Fradita", url: "https://github.com/RaihanFradita" }],
   openGraph: {
     type: "website",
-    title: "Raihan Fradita — Aspiring AI Engineer",
+    title: "Raihan Fradita | AI Engineer Portfolio",
     description:
-      "Informatics Engineering student building practical AI applications, exploring machine learning, LLM-powered systems, RAG, and AI agents.",
+      "Explore Raihan Fradita's AI engineering projects, including Waguri Framework for AI reliability and AIRA Business for AI-powered financial intelligence.",
     siteName: "Raihan Fradita Portfolio",
-    locale: "en_US"
+    locale: "en_US",
+    images: [{ url: "/raihan.jpg", alt: "Raihan Fradita" }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Raihan Fradita — Aspiring AI Engineer",
-    description: "Building AI Systems That Solve Real Problems. Projects, architecture, and code."
+    title: "Raihan Fradita | AI Engineer Portfolio",
+    description:
+      "Explore Raihan Fradita's AI engineering projects, including Waguri Framework for AI reliability and AIRA Business for AI-powered financial intelligence.",
+    images: ["/raihan.jpg"]
   },
   robots: { index: true, follow: true }
 };

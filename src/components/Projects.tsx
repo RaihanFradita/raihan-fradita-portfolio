@@ -1,328 +1,163 @@
-"use client";
+import Image from "next/image";
+import { ArrowUpRight, Check, Clock3, Github } from "lucide-react";
 
-import { useState } from "react";
-import { Github, ExternalLink, ArrowUpRight, FolderGit2, CheckCircle, Clock, AlertCircle } from "lucide-react";
-
-interface ProjectItem {
+interface Project {
   id: string;
   name: string;
-  category: string;
-  status: "Completed" | "In Progress" | "Prototype";
-  statusNote: string;
-  problem: string;
-  implementation: string;
+  tagline: string;
+  description: string;
+  status: string;
+  highlights: string[];
   technologies: string[];
-  keyDecisions: string[];
-  evaluation: string;
-  challenges: string[];
   githubUrl: string;
-  demoUrl?: string;
 }
 
-const projectsData: ProjectItem[] = [
+const projects: Project[] = [
   {
-    id: "aira-ai",
-    name: "AIRA / NOVA AI Assistant",
-    category: "LLM Engineering & Conversational AI",
-    status: "Prototype",
-    statusNote: "Active Prototype — Exploring Local RAG & Function Calling",
-    problem:
-      "Off-the-shelf cloud AI assistants require ongoing external API subscriptions, do not natively index personal notes or local documents, and pose privacy concerns for sensitive academic or personal workflows.",
-    implementation:
-      "Built a prototype conversational assistant that integrates local LLMs (via Ollama) and cloud APIs with retrieval-augmented generation. Implemented a document loader for PDF/Markdown notes, vector similarity search, and structured prompt pipelines with memory retention across conversational turns.",
-    technologies: ["Python", "Ollama", "LangChain", "FastAPI", "Next.js", "ChromaDB"],
-    keyDecisions: [
-      "Benchmarked local 7B-8B quantized models (Llama 3.2, Qwen 2.5) via Ollama to balance response latency against reasoning quality on consumer hardware.",
-      "Implemented semantic chunking with overlapping boundaries to avoid losing context in tabular data and structured markdown notes.",
-      "Structured API contracts with FastAPI and Pydantic models to ensure predictable responses for frontend state management."
+    id: "waguri",
+    name: "Waguri Framework",
+    tagline: "Building More Reliable AI Systems.",
+    description:
+      "An experimental Python framework that makes LLM responses easier to inspect by checking generated text against supplied evidence and returning structured review results.",
+    status: "Under Development",
+    highlights: [
+      "Current checks use exact, case- and whitespace-normalized text matching; results identify supported or uncertain evidence.",
+      "Responses are flagged for review. Semantic verification and real local or cloud provider adapters are not yet implemented.",
+      "Pytest coverage includes claim splitting, evidence checks, and client response handling."
     ],
-    evaluation:
-      "Tested locally across 50+ document Q&A test queries. Context retrieval hit rate successfully retrieved relevant chunks for 88% of factual queries. Average Time-To-First-Token (TTFT) on local hardware averages ~1.2s on quantized 7B models.",
-    challenges: [
-      "Hardware memory limitations when running concurrent embeddings and generation locally.",
-      "Handling edge-case queries where retrieved context contains contradictory or ambiguous notes.",
-      "Future goal: Implementing reranking with cross-encoders to further filter low-relevance chunks."
-    ],
-    githubUrl: "https://github.com/RaihanFradita"
+    technologies: ["Python", "LLM", "AI Reliability", "Evidence Validation", "pytest"],
+    githubUrl: "https://github.com/RaihanFradita/waguri-framework"
   },
   {
-    id: "graduation-prediction",
-    name: "Student Graduation Prediction",
-    category: "Academic Machine Learning",
-    status: "Completed",
-    statusNote: "Academic Project — Completed & Documented",
-    problem:
-      "University academic advisors often identify at-risk students too late in their academic trajectory, resulting in delayed graduation rates and higher dropout risks that early intervention could prevent.",
-    implementation:
-      "Developed a machine learning classification pipeline to predict student on-time graduation based on early semester academic records. Performed data preprocessing, exploratory feature analysis, class imbalance mitigation, and cross-validated model evaluation comparing Random Forest with a Logistic Regression baseline.",
-    technologies: ["Python", "scikit-learn", "pandas", "NumPy", "Matplotlib", "Seaborn"],
-    keyDecisions: [
-      "Selected Random Forest classifier for its resilience to non-linear feature relationships and interpretability through feature importance rankings.",
-      "Optimized evaluation targeting Recall rather than raw Accuracy to prioritize identifying at-risk students (reducing false negatives).",
-      "Engineered longitudinal features including credit completion velocity (credits earned vs. attempted) and semester GPA delta."
+    id: "aira-business",
+    name: "AIRA Business",
+    tagline: "AI-Powered Financial Intelligence Platform.",
+    description:
+      "A financial intelligence app for exploring business performance through dashboards, interactive analytics, Excel/CSV imports, and AI-assisted financial analysis. It is designed for local use, with Ollama and Gemma 3 4B available as an optional provider alongside Anthropic and built-in analysis.",
+    status: "Built — Under Audit and Refinement",
+    highlights: [
+      "Dashboard and analytics views for business and financial data.",
+      "Import financial data from Excel and CSV files.",
+      "AI assistant for financial analysis, with configurable local and external provider options."
     ],
-    evaluation:
-      "Achieved 86% accuracy and 0.84 recall on test validation sets using 5-fold cross-validation. Feature importance analysis identified semester 2-3 credit completion velocity and foundational STEM course performance as primary predictors.",
-    challenges: [
-      "Dataset was limited to historical academic records without non-academic factors (e.g., socio-economic status, campus engagement).",
-      "Handling class imbalance between regular and delayed graduation cohorts through stratified sampling.",
-      "Future improvement: Incorporating longitudinal survival analysis techniques to estimate expected semester of graduation."
-    ],
-    githubUrl: "https://github.com/RaihanFradita"
-  },
-  {
-    id: "school-qr-attendance",
-    name: "School QR Attendance System",
-    category: "Full-Stack Information System",
-    status: "Completed",
-    statusNote: "Functional Prototype / Collaborative Web System",
-    problem:
-      "Traditional manual roll-call attendance consumes 10–15 minutes of lecture time per session, is susceptible to proxy attendance, and requires laborious manual data entry into administrative spreadsheets.",
-    implementation:
-      "Engineered a responsive web application facilitating rapid classroom attendance via dynamic QR scans. Developed role-based views for educators and administrators, automated class recap statistics, and integrated REST endpoints for student records management.",
-    technologies: ["React", "TypeScript", "Node.js", "REST API", "Tailwind CSS"],
-    keyDecisions: [
-      "Designed time-sensitive session tokens for QR codes to deter students from sharing static screenshots with absent peers.",
-      "Built optimistic UI state updates on mobile scanning views to provide instant feedback even on spotty campus Wi-Fi networks.",
-      "Structured role-based authorization ensuring educators only access and modify their assigned course sections."
-    ],
-    evaluation:
-      "Successfully demonstrated in test classroom sessions, reducing attendance recording time from ~10 minutes to under 2 minutes for a class of 30 students with zero duplicate check-in submissions.",
-    challenges: [
-      "Ensuring smooth camera access and QR scanner performance across diverse mobile browsers and camera hardware.",
-      "Network resilience when multiple students attempt to verify attendance simultaneously at the beginning of class.",
-      "Future improvement: Adding offline verification queueing via service workers."
-    ],
-    githubUrl: "https://github.com/RaihanFradita"
+    technologies: ["React", "Elysia.js", "PostgreSQL", "Ollama", "Gemma 3 4B", "LLM Integration"],
+    githubUrl: "https://github.com/RaihanFradita/AIRA-AI-Business"
   }
 ];
 
-export default function Projects() {
-  const [selectedTab, setSelectedTab] = useState<Record<string, "summary" | "engineering">>({
-    "aira-ai": "summary",
-    "graduation-prediction": "summary",
-    "school-qr-attendance": "summary"
-  });
-
-  const toggleTab = (id: string, tab: "summary" | "engineering") => {
-    setSelectedTab((prev) => ({ ...prev, [id]: tab }));
-  };
-
-  const getStatusBadge = (status: ProjectItem["status"]) => {
-    switch (status) {
-      case "Completed":
-        return "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800";
-      case "In Progress":
-        return "bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border-amber-200 dark:border-amber-800";
-      case "Prototype":
-        return "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 border-blue-200 dark:border-blue-800";
-    }
-  };
+function ProjectPreview({ projectId }: { projectId: Project["id"] }) {
+  if (projectId === "aira-business") {
+    return (
+      <div className="relative aspect-[16/9] overflow-hidden rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-muted)]">
+        <Image
+          src="/projects/aira-financial-analytics.png"
+          alt="AIRA Business financial analytics dashboard"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover object-top"
+        />
+      </div>
+    );
+  }
 
   return (
-    <section id="projects" className="py-20 md:py-28 border-b border-[var(--border-color)]">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent-blue)] mb-2">
-              <FolderGit2 size={13} />
-              <span>FEATURED WORK &amp; CASE STUDIES</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
-              Engineering Projects
-            </h2>
+    <figure className="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-muted)] p-4 sm:p-5">
+      <figcaption className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+        Current response path
+      </figcaption>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {["Question + context", "Model adapter", "Exact text check", "Needs review"].map((step, index) => (
+          <div
+            key={step}
+            className="flex min-h-16 flex-col justify-between rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] p-2.5"
+          >
+            <span className="font-mono text-[10px] text-[var(--accent-blue)]">0{index + 1}</span>
+            <span className="text-xs font-medium leading-snug text-[var(--text-primary)]">{step}</span>
           </div>
-          <p className="text-sm text-[var(--text-secondary)] max-w-md leading-relaxed">
-            Honest evaluations of what was built, key engineering decisions, and current limitations. Labeled by verified development state.
+        ))}
+      </div>
+    </figure>
+  );
+}
+
+export default function Projects() {
+  return (
+    <section id="projects" className="border-b border-[var(--border-color)] py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-10 max-w-2xl">
+          <div className="mb-2 inline-flex items-center gap-2 font-mono text-xs text-[var(--accent-blue)]">
+            <span>FEATURED WORK</span>
+            <span aria-hidden="true">/</span>
+            <span>INDEPENDENT PROJECTS</span>
+          </div>
+          <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl md:text-4xl">
+            Engineering Projects
+          </h2>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
+            Practical work in AI reliability and financial intelligence, with current capabilities and project maturity stated clearly.
           </p>
         </div>
 
-        {/* Project Cards */}
-        <div className="space-y-10">
-          {projectsData.map((project, index) => {
-            const currentTab = selectedTab[project.id] || "summary";
-            return (
-              <article
-                key={project.id}
-                className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-8 shadow-xs hover:border-[var(--text-muted)] transition-colors"
-              >
-                {/* Top Meta Bar */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[var(--border-subtle)] mb-6">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold text-[var(--text-muted)]">
-                      0{index + 1}
-                    </span>
-                    <span className="text-[var(--border-color)]">/</span>
-                    <span className="font-mono text-xs text-[var(--text-secondary)] font-medium">
-                      {project.category}
-                    </span>
-                  </div>
+        <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2">
+          {projects.map((project, index) => (
+            <article
+              key={project.id}
+              className="flex flex-col rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 shadow-xs transition-colors duration-200 hover:border-[var(--text-muted)] sm:p-6"
+            >
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <span className="font-mono text-xs text-[var(--text-muted)]">PROJECT 0{index + 1}</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 font-mono text-[10px] font-medium text-amber-800 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
+                  <Clock3 size={11} aria-hidden="true" />
+                  {project.status}
+                </span>
+              </div>
 
-                  <div className="flex items-center gap-2">
+              <h3 className="text-xl font-bold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+                {project.name}
+              </h3>
+              <p className="mt-1 text-sm font-medium text-[var(--accent-blue)]">{project.tagline}</p>
+              <p className="mt-3 min-h-[5rem] text-sm leading-relaxed text-[var(--text-secondary)]">
+                {project.description}
+              </p>
+
+              <div className="my-5">
+                <ProjectPreview projectId={project.id} />
+              </div>
+
+              <ul className="mb-5 space-y-2.5 text-sm leading-relaxed text-[var(--text-secondary)]">
+                {project.highlights.map((highlight) => (
+                  <li key={highlight} className="flex items-start gap-2.5">
+                    <Check size={15} aria-hidden="true" className="mt-0.5 shrink-0 text-[var(--accent-blue)]" />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-auto border-t border-[var(--border-subtle)] pt-4">
+                <div className="mb-5 flex flex-wrap gap-1.5" aria-label="Technologies used">
+                  {project.technologies.map((technology) => (
                     <span
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-mono font-medium ${getStatusBadge(
-                        project.status
-                      )}`}
+                      key={technology}
+                      className="rounded border border-[var(--border-subtle)] bg-[var(--bg-muted)] px-2 py-1 font-mono text-[10px] text-[var(--text-secondary)]"
                     >
-                      {project.status === "Completed" && <CheckCircle size={11} />}
-                      {project.status === "Prototype" && <Clock size={11} />}
-                      {project.status === "In Progress" && <Clock size={11} />}
-                      <span>{project.status}</span>
+                      {technology}
                     </span>
-                  </div>
+                  ))}
                 </div>
-
-                {/* Title & Description */}
-                <div className="mb-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
-                    <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">
-                      {project.name}
-                    </h3>
-
-                    {/* View Switcher Tabs */}
-                    <div className="inline-flex rounded-md border border-[var(--border-color)] bg-[var(--bg-muted)] p-0.5 text-xs font-mono">
-                      <button
-                        onClick={() => toggleTab(project.id, "summary")}
-                        className={`px-3 py-1 rounded transition-colors ${
-                          currentTab === "summary"
-                            ? "bg-[var(--bg-surface)] text-[var(--text-primary)] font-semibold shadow-xs"
-                            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                        }`}
-                      >
-                        Overview
-                      </button>
-                      <button
-                        onClick={() => toggleTab(project.id, "engineering")}
-                        className={`px-3 py-1 rounded transition-colors ${
-                          currentTab === "engineering"
-                            ? "bg-[var(--bg-surface)] text-[var(--text-primary)] font-semibold shadow-xs"
-                            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                        }`}
-                      >
-                        Engineering Details
-                      </button>
-                    </div>
-                  </div>
-
-                  <p className="text-xs font-mono text-[var(--text-muted)] mb-4">
-                    {project.statusNote}
-                  </p>
-                </div>
-
-                {/* Tab Content */}
-                {currentTab === "summary" ? (
-                  <div className="space-y-6">
-                    {/* Problem & Solution Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-[var(--text-secondary)]">
-                      <div className="p-4 rounded-lg bg-[var(--bg-muted)]/70 border border-[var(--border-subtle)]">
-                        <div className="font-mono text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider mb-2">
-                          Problem Statement
-                        </div>
-                        <p className="leading-relaxed">{project.problem}</p>
-                      </div>
-
-                      <div className="p-4 rounded-lg bg-[var(--bg-muted)]/70 border border-[var(--border-subtle)]">
-                        <div className="font-mono text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider mb-2">
-                          Implemented Solution
-                        </div>
-                        <p className="leading-relaxed">{project.implementation}</p>
-                      </div>
-                    </div>
-
-                    {/* Evaluation Results */}
-                    <div className="p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)]">
-                      <div className="font-mono text-xs font-semibold text-[var(--accent-blue)] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                        <CheckCircle size={13} />
-                        <span>Evaluation &amp; Observations</span>
-                      </div>
-                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                        {project.evaluation}
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-6">
-                    {/* Engineering Decisions */}
-                    <div>
-                      <div className="font-mono text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider mb-3">
-                        Key Engineering Decisions
-                      </div>
-                      <div className="space-y-2">
-                        {project.keyDecisions.map((decision, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-start gap-2.5 p-3 rounded-lg bg-[var(--bg-muted)]/50 border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] leading-relaxed"
-                          >
-                            <span className="font-mono text-[var(--accent-blue)] font-bold mt-0.5">
-                              0{idx + 1}.
-                            </span>
-                            <span>{decision}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Limitations & Challenges */}
-                    <div className="p-4 rounded-lg bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-800/60">
-                      <div className="font-mono text-xs font-semibold text-amber-800 dark:text-amber-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <AlertCircle size={13} />
-                        <span>Challenges, Trade-offs &amp; Limitations</span>
-                      </div>
-                      <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
-                        {project.challenges.map((c, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-amber-600 dark:text-amber-400 mt-0.5">▪</span>
-                            <span>{c}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
-                {/* Card Footer: Tech Stack & Actions */}
-                <div className="mt-6 pt-5 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.map((t) => (
-                      <span
-                        key={t}
-                        className="font-mono text-[11px] px-2 py-0.5 rounded bg-[var(--bg-muted)] border border-[var(--border-subtle)] text-[var(--text-secondary)]"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-3 text-xs font-mono">
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--accent-blue)] transition-colors"
-                    >
-                      <Github size={13} />
-                      <span>Repository</span>
-                      <ArrowUpRight size={12} />
-                    </a>
-
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--accent-blue)] transition-colors"
-                      >
-                        <ExternalLink size={13} />
-                        <span>Live Demo</span>
-                        <ArrowUpRight size={12} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${project.name} on GitHub (opens in a new tab)`}
+                  className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[var(--border-color)] bg-[var(--bg-surface)] px-3.5 text-xs font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-blue)]"
+                >
+                  <Github size={14} aria-hidden="true" />
+                  View on GitHub
+                  <ArrowUpRight size={13} aria-hidden="true" className="text-[var(--text-muted)]" />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
